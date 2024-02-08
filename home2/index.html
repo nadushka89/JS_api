@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Slider</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .slider-container {
+        /* margin-top: 200px; */
+        position: relative;
+        max-width: 600px;
+        
+        margin: auto;
+        overflow: hidden;
+      }
+
+      .slider {
+        display: flex;
+      }
+
+      .slider img {
+       
+        min-height: 400px;
+        width: 100%;
+        display: none;
+      }
+
+      .prev-btn,
+      .next-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .prev-btn {
+        left: 0;
+      }
+
+      .next-btn {
+        right: 0;
+      }
+
+      .dots-container {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: gray;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      .dot.active {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-container">
+      <div class="slider">
+        <img src="cat2.jpg" alt="Kitten 1" />
+        <img src="cat3.jpg" alt="Kitten 2" />
+        <img src="cat4.jpg" alt="Kitten 3" />
+      </div>
+      <button class="prev-btn"><</button>
+      <button class="next-btn">></button>
+      <div class="dots-container">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
