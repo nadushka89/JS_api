@@ -37,7 +37,7 @@
 //         "name": "Пилатес",
 //         "time": "11:30 - 12:30",
 //         "maxParticipants": 10,
-//         "currentParticipants": 5
+//         "currentParticipants": 9
 //     },
 //     {
 //         "id": 3,
@@ -77,7 +77,7 @@ const initialLessons = `[
         "name": "Пилатес",
         "time": "11:30 - 12:30",
         "maxParticipants": 10,
-        "currentParticipants": 5
+        "currentParticipants": 9
     },
     {
         "id": 3,
@@ -91,7 +91,7 @@ const initialLessons = `[
         "name": "Танцы",
         "time": "14:30 - 15:30",
         "maxParticipants": 12,
-        "currentParticipants": 12
+        "currentParticipants": 11
     },
     {
         "id": 5,
@@ -105,14 +105,15 @@ const initialLessons = `[
 if (!localStorage.getItem(localStorageKey)) {
   localStorage.setItem(localStorageKey, initialLessons);
 }
-let lessons = JSON.parse(localStorage.getItem(localStorageKey));
+const lessons = JSON.parse(localStorage.getItem(localStorageKey));
 
 if (!localStorage.getItem(userStorageKey)) {
   localStorage.setItem(userStorageKey, JSON.stringify([]));
 }
 
-let userCourses = JSON.parse(localStorage.getItem(userStorageKey));
+const userCourses = JSON.parse(localStorage.getItem(userStorageKey));
 const listLessonEl = document.querySelector('.list-lessons');
+
 
 // Функция для отображения расписания:
 function timetable(item) {
@@ -120,22 +121,22 @@ function timetable(item) {
   const isLessonFull = item.currentParticipants >= item.maxParticipants;
   // для проверки выбран ли ранее курс
   const isUserSelected = userCourses.includes(item.id);
+  const isLastPlace = item.currentParticipants === item.maxParticipants - 1; // Проверка на последнее место
 
   listLessonEl.insertAdjacentHTML(
     'beforeend',
     `
-          <div class="lesson" data-id="${item.id}">
-                  <div class="nameLesson">${item.name}</div>
-                  <div class="timeLesson">${item.time}</div>
-                  <div class="maxParticipants">${item.maxParticipants}</div>
-                  <div class="currentParticipants">${item.currentParticipants}</div>
-                  <button class="btnRecord" ${isUserSelected || isLessonFull ? 'disabled' : ''}>Записаться</button>
-                  <button class="btnCancel" ${!isUserSelected || isLessonFull ? 'disabled' : ''}>Отменить запись</button>
-              </div>
-          `,
+      <div class="lesson" data-id="${item.id}">
+        <div class="nameLesson">Название занятия: ${item.name}</div>
+        <div class="timeLesson">Время: ${item.time}</div>
+        <div class="maxParticipants">Максимальное количество участников: ${item.maxParticipants}</div>
+        <div class="currentParticipants">Текущее количество участников: ${item.currentParticipants}</div>
+        <button class="btnRecord" ${isUserSelected || isLessonFull ? 'disabled' : ''}>📝 Записаться</button>
+        <button class="btnCancel" ${!isUserSelected || isLastPlace ? 'disabled' : ''}>🗑️ Отменить запись</button>
+      </div>
+    `,
   );
 }
-
 // Обработка событий при клике на кнопку "Записаться"
 listLessonEl.addEventListener('click', ({ target }) => {
   const fatherEl = target.closest('.lesson');
@@ -145,7 +146,7 @@ listLessonEl.addEventListener('click', ({ target }) => {
   if (target.matches('.btnRecord')) {
     if (lesson.currentParticipants < lesson.maxParticipants) {
       lesson.currentParticipants += 1;
-      fatherEl.querySelector('.currentParticipants').textContent = lesson.currentParticipants;
+      fatherEl.querySelector('.currentParticipants').textContent = `Текущее количество участников: ${lesson.currentParticipants}`;
       fatherEl.querySelector('.btnRecord').setAttribute('disabled', true);
       fatherEl.querySelector('.btnCancel').removeAttribute('disabled');
       userCourses.push(lesson.id);
@@ -153,11 +154,12 @@ listLessonEl.addEventListener('click', ({ target }) => {
       saveData(lessons);
     } else {
       fatherEl.querySelector('.btnRecord').setAttribute('disabled', true);
+
     }
   } else if (target.matches('.btnCancel')) {
     if (lesson.currentParticipants > 0) {
       lesson.currentParticipants -= 1;
-      fatherEl.querySelector('.currentParticipants').textContent = lesson.currentParticipants;
+      fatherEl.querySelector('.currentParticipants').textContent = `Текущее количество участников: ${lesson.currentParticipants}`;
       fatherEl.querySelector('.btnRecord').removeAttribute('disabled');
       fatherEl.querySelector('.btnCancel').setAttribute('disabled', true);
       userCourses = userCourses.filter((courseId) => courseId !== lesson.id);

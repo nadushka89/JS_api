@@ -4,8 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lessons</title>
+    <style>
+      .list-lessons {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        flex-direction: column;
+      }
+      .title{
+        text-align: center;
+      }
+      .lesson{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .nameLesson, .timeLesson, .maxParticipants, .currentParticipants{
+        
+        margin-bottom: 10px;
+      }
+      .nameLesson{
+        font-weight: 700;
+      }
+    </style>
   </head>
   <body>
+    <h1 class="title">Расписание занятий</h1>
     <div class="list-lessons"></div>
     <script src="index.js"></script>
   </body>
