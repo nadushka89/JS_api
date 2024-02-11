@@ -1,6 +1,7 @@
 # Random Image
 
 ![Random Image](random_image.png)
+![Random Image](random_image1.png)
 Это веб-приложение, которое отображает случайное изображение из коллекции Unsplash и позволяет пользователям ставить "лайк" этому изображению.
 
 ## Описание
